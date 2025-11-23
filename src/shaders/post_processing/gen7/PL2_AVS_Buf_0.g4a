@@ -540,9 +540,9 @@
     // modified_u_coord = u_coord – 5.0/(256*width); //floating point
     (f1.0) add (1)     r17.2:f       r17.2<0;1,0>:f   -r2.3:f
     //else if(((int)(u_left*width + 255.0/256) == (int)(u_left*width)) 
-    (-f1.0) cmp.e.f0.0  (1) null<1>:d    r14.3:d    r14.0:d
+    (-f1.0) cmp.e.f1.0  (1) null<1>:d    r14.3:d    r14.0:d
     // modified_u_coord = u_coord + 1.0/(256*width); //floating point
-    (f0.0) add (1)     r17.2:f       r17.2<0;1,0>:f   r2.2:f
+    (f1.0) add (1)     r17.2:f       r17.2<0;1,0>:f   r2.2:f
 
 GEN7_PL2_AVS_WA_DONE_L0_0_:
     mov  (1)    f0.0:uw                r14.8:uw                   // restore f0.0

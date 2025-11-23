@@ -852,7 +852,7 @@ gen8_pp_plx_avs_initialize(VADriverContextP ctx, struct i965_post_processing_con
     struct gen7_pp_static_parameter *pp_static_parameter = pp_context->pp_static_parameter;
     struct gen8_sampler_8x8_avs *sampler_8x8;
     int i;
-    int width[3], height[3], pitch[3], offset[3];
+    int width[3] = {0}, height[3] = {0}, pitch[3], offset[3];
     int src_width, src_height;
     unsigned char *cc_ptr;
     AVSState * const avs = &pp_avs_context->state;
@@ -979,7 +979,7 @@ gen8_pp_plx_avs_initialize(VADriverContextP ctx, struct i965_post_processing_con
     assert(avs->config->num_phases >= 16);
     for (i = 0; i <= 16; i++) {
         struct gen8_sampler_8x8_avs_coefficients * const sampler_8x8_state =
-                    &sampler_8x8->coefficients[i];
+                &sampler_8x8->coefficients[i];
         const AVSCoeffs * const coeffs = &avs->coeffs[i];
 
         sampler_8x8_state->dw0.table_0x_filter_c0 =
@@ -1049,7 +1049,7 @@ gen8_pp_plx_avs_initialize(VADriverContextP ctx, struct i965_post_processing_con
 
     for (; i <= avs->config->num_phases; i++) {
         struct gen8_sampler_8x8_avs_coefficients * const sampler_8x8_state =
-                    &sampler_8x8->coefficients1[i - 17];
+                &sampler_8x8->coefficients1[i - 17];
         const AVSCoeffs * const coeffs = &avs->coeffs[i];
 
         sampler_8x8_state->dw0.table_0x_filter_c0 =
@@ -1906,7 +1906,8 @@ gen8_pp_context_get_surface_conf(VADriverContextP ctx,
         if (fourcc == VA_FOURCC_RGBX ||
             fourcc == VA_FOURCC_RGBA ||
             fourcc == VA_FOURCC_BGRX ||
-            fourcc == VA_FOURCC_BGRA) {
+            fourcc == VA_FOURCC_BGRA ||
+            fourcc == VA_FOURCC_ARGB) {
             /* nothing to do here */
         } else if (fourcc == VA_FOURCC_P010 || fourcc == VA_FOURCC_NV12) {
             width[1] = ALIGN(width[0], 2) / 2;
@@ -1937,7 +1938,8 @@ gen8_pp_context_get_surface_conf(VADriverContextP ctx,
         if (fourcc == VA_FOURCC_RGBX ||
             fourcc == VA_FOURCC_RGBA ||
             fourcc == VA_FOURCC_BGRX ||
-            fourcc == VA_FOURCC_BGRA) {
+            fourcc == VA_FOURCC_BGRA ||
+            fourcc == VA_FOURCC_ARGB) {
             /* nothing to do here */
         } else if (fourcc == VA_FOURCC_P010 || fourcc == VA_FOURCC_NV12) {
             width[1] = ALIGN(width[0], 2) / 2;

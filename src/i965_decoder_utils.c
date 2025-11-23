@@ -84,7 +84,7 @@ mpeg2_wa_slice_vertical_position(
 
     for (j = 0; j < decode_state->num_slice_params; j++) {
         struct buffer_store * const buffer_store =
-                    decode_state->slice_params[j];
+                decode_state->slice_params[j];
 
         for (i = 0; i < buffer_store->num_elements; i++) {
             VASliceParameterBufferMPEG2 * const slice_param =
@@ -615,7 +615,7 @@ intel_update_codec_frame_store_index(
     /* Tag entries that are still available in our Frame Store */
     for (i = 0; i < ARRAY_ELEMS(decode_state->reference_objects); i++) {
         struct object_surface * const obj_surface =
-                    decode_state->reference_objects[i];
+                decode_state->reference_objects[i];
         if (!obj_surface)
             continue;
 
@@ -650,7 +650,7 @@ intel_update_codec_frame_store_index(
     /* Append the new reference frames */
     for (i = 0, n = 0; i < ARRAY_ELEMS(decode_state->reference_objects); i++) {
         struct object_surface * const obj_surface =
-                    decode_state->reference_objects[i];
+                decode_state->reference_objects[i];
         if (!obj_surface || !(add_refs & (1 << i)))
             continue;
 
@@ -738,7 +738,7 @@ gen75_update_avc_frame_store_index(
        invalid entries are discarded. */
     for (i = 0, n = 0; i < ARRAY_ELEMS(decode_state->reference_objects); i++) {
         struct object_surface * const obj_surface =
-                    decode_state->reference_objects[i];
+                decode_state->reference_objects[i];
         if (!obj_surface)
             continue;
 
@@ -842,7 +842,7 @@ intel_update_vc1_frame_store_index(VADriverContextP ctx,
         }
     }
 
-    obj_surface= decode_state->reference_objects[1];
+    obj_surface = decode_state->reference_objects[1];
 
     if (pic_param->backward_reference_picture == VA_INVALID_ID ||
         !obj_surface ||
@@ -921,7 +921,7 @@ void
 intel_update_vp9_frame_store_index(VADriverContextP ctx,
                                    struct decode_state *decode_state,
                                    VADecPictureParameterBufferVP9 *pic_param,
-                                   GenFrameStore frame_store[MAX_GEN_REFERENCE_FRAMES])
+                                   GenFrameStore frame_store[MAX_GEN_HCP_REFERENCE_FRAMES])
 {
     struct object_surface *obj_surface;
     int i = 0, index = 0;
@@ -969,7 +969,7 @@ intel_update_vp9_frame_store_index(VADriverContextP ctx,
     }
 
     //Set the remaining framestores to either last/golden/altref
-    for (i = 3; i < MAX_GEN_REFERENCE_FRAMES; i++) {
+    for (i = 3; i < MAX_GEN_HCP_REFERENCE_FRAMES; i++) {
         frame_store[i].surface_id = frame_store[i % 2].surface_id;
         frame_store[i].obj_surface = frame_store[i % 2].obj_surface;
     }

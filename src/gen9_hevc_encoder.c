@@ -2544,15 +2544,16 @@ gen9_hevc_brc_update_set_constant(VADriverContextP ctx,
     if (priv_state->picture_coding_type == HEVC_SLICE_I)
         memset((void *)pdata, 0, GEN9_HEVC_ENC_SKIP_VAL_SIZE);
     else {
-        gen9_hevc_mbenc_b_mb_enc_curbe_data *curbe_cmd = NULL;
+        const unsigned int *curbe_data = NULL;
         int curbe_size = 0;
 
         gen9_hevc_get_b_mbenc_default_curbe(priv_state->tu_mode,
                                             priv_state->picture_coding_type,
-                                            (void **)&curbe_cmd,
+                                            (void **)&curbe_data,
                                             &curbe_size);
 
-        idx = curbe_cmd->dw3.block_based_skip_enable ? 1 : 0;
+        /* Extract block_based_skip_enable from dw3 (bit 19) */
+        idx = (curbe_data[3] & (1 << 19)) ? 1 : 0;
         memcpy((void *)pdata, GEN9_HEVC_ENC_SKIP_THREAD[idx], sizeof(GEN9_HEVC_ENC_SKIP_THREAD[idx]));
     }
     pdata += GEN9_HEVC_ENC_SKIP_VAL_SIZE;

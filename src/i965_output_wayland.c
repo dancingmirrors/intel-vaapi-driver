@@ -404,10 +404,6 @@ i965_output_wayland_init(VADriverContextP ctx)
     struct VADriverVTableWayland * const vtable = ctx->vtable_wayland;
 
     static const struct dso_symbol libegl_symbols[] = {
-        {
-            "wl_drm_interface",
-            offsetof(struct wl_vtable, drm_interface)
-        },
         { NULL, }
     };
 

@@ -103,7 +103,7 @@ gen-version:
 	@echo $(VERSION) > $(NEW_VERSION_FILE)
 if HAVE_GIT
 	@[ -d $(top_srcdir)/.git ] && \
-	(cd $(top_srcdir) && $(GIT) describe --tags) > $(NEW_VERSION_FILE) || :
+	(cd $(top_srcdir) && $(GIT) describe --tags 2>/dev/null) > $(NEW_VERSION_FILE) || :
 endif
 	@[ -f $(srcdir)/$(PKG_VERSION_FILE) ] && \
 	cp -f $(srcdir)/$(PKG_VERSION_FILE) $(NEW_VERSION_FILE) || :
